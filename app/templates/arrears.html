@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <table border="1" width="100%" cellpadding="5">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Название</th>
+                    <th>Автор</th>
+                    <th>Год издания</th>
+                    <th>Взял</th>
+                    <th>Должен отдать</th>
+                    <th>Продлить?</th>
+                    <th>Статус запроса</th>
+                </tr>
+            </thead>
+        {% for arr in current_user.ex_books %}
+            <tr>
+                <td>{{ arr.id }}</td>
+                <td>{{ arr.book_name }}</td>
+                <td>{{ arr.book_author }}</td>
+                <td>{{ arr.book_date_publ }}</td>
+                <td>{{ arr.timestamp.strftime("%d.%m.%Y") }}</td>
+                <td>{{ arr.exrt_date.strftime("%d.%m.%Y") if arr.exrt_date != None }}</td>
+                <td><center><a href="{{ url_for('arr_please', arr_id=arr.id) }}">Да!</a><center></td>
+                {% if arr.arrear == 'Отклонено' %}
+                    <td><center>🚫<center></td>
+                {% elif arr.arrear == 'Одобрено' %}
+                    <td><center>✅<center></td>
+                {% elif arr.arrear == None %}
+                    <td><center>Не отправлен<center></td>
+                {% else %}
+                    <td><center>🔎<center></td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        </table>
+    </div>
+{% endblock content %}

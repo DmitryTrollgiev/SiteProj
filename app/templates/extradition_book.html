@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Выдача книг</legend>
+                <div class="form-group">
+                    <label>Книга</label>
+				    <select name="book" class="form-control">
+                        {% for bk in form.book.choices %}
+                        <option value="{{ bk[0] }}"> {{ bk[1] }} </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Читатель</label>
+				    <select name="reader" class="form-control">
+                        {% for rd in form.reader.choices %}
+                        <option value="{{ rd[0] }}"> {{ rd[1] }} </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                  <label for="example-date-input">До какого</label>
+                    <input class="form-control" type="date" name="ex_date" value="11-09-2011" id="example-date-input">
+                </div>
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+        </form>
+        <table border="1" width="100%" cellpadding="5">
+            <thead>
+                <tr>
+                    <th>Дата</th>
+                    <th>Название</th>
+                    <th>Автор</th>
+                    <th>Год издания</th>
+                    <th>Кто взял</th>
+                    <th>До какого</th>
+                    <th>🗑</th>
+                </tr>
+            </thead>
+        {% for eb in eb_get %}
+            <tr>
+                <td>{{ eb.timestamp.strftime("%d.%m.%Y %X") }}</td>
+                <td>{{ eb.book_name }}</td>
+                <td>{{ eb.book_author }}</td>
+                <td>{{ eb.book_date_publ }}</td>
+                <td>{{ users[eb.reader.id-1].fio }}</td>
+                <td>{{ eb.exrt_date.strftime("%d.%m.%Y") if eb.exrt_date != None }}</td>
+                <td><a href="{{ url_for('delete_eb', eb_id=eb.id, book_id=eb.book_id) }}">🗑</a></td>
+            </tr>
+        {% endfor %}
+        </table>
+    </div>
+{% endblock content %}

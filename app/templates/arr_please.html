@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Запросить продление сроков взятие книги</legend>
+                <div class="form-group">
+                  <label for="example-date-input">До какого</label>
+                    <input class="form-control" type="date" name="arr_date" value="11-09-2011" id="example-date-input">
+                </div>
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+        </form>
+    </div>
+{% endblock content %}

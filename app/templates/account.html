@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1>{{ current_user.fio }}</h1>
+    <h5>Логин:</h5> {{ current_user.username }}
+    <p>
+    <h5>Email:</h5> {{ current_user.email }}
+    <p>
+    <h5>Адрес:</h5> {{ current_user.address }}
+{% endblock content %}
